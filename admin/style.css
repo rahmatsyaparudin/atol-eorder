@@ -159,6 +159,7 @@ input[type="submit"] {
 #content {
 	margin:20px;
 	color:#555;
+	word-break: break-all
 }
 
 	#content #body {

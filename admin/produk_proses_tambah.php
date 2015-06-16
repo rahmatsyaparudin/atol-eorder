@@ -30,7 +30,7 @@ session_start();
                     <td width="75%" style="padding-right:20px;">
                         <div id="body">
                             <div class="title" align="center">PENAMBAHAN PRODUK</div>
-                            <?php 
+                            <?php
                                 $kategori=$_POST['pilihkategori'];
                                 $merk=$_POST['pilihmerk'];
                                 $nama=$_POST['namaproduk'];
@@ -44,11 +44,18 @@ session_start();
                                 $lokasi_file = @$_FILES['gambar']['tmp_name'];
                                 $tipe_file   = @$_FILES['gambar']['type'];
                                 $nama_file   = @$_FILES['gambar']['name'];
-                                $direktori   = "images/produk/$nama_file";
+                                $direktori   = "images/produk/$nama";
 
+                                if (!empty($_FILES['gambar'])&&!empty($tipe_file)){
+                                    $file_path="images/produk/".$nama.substr($tipe_file, -4);
+                                    move_uploaded_file($lokasi_file, $file_path);
+                                }else{
+                                    $file_path = "images/produk/noimage.png";
+                                }
+                                
                                 $link=koneksi_db();
                                 
-                                $sql = "INSERT INTO produk VALUES(NULL,'$kategori','$merk','$nama','$harga','$berat','$diskon','$stok','$dijual','$deskripsi','$direktori','T')"; // susun SQL
+                                $sql = "INSERT INTO produk VALUES(NULL,'$kategori','$merk','$nama','$harga','$berat','$diskon','$stok','$dijual','$deskripsi','$file_path','T')"; // susun SQL
                                 $res=mysql_query($sql,$link); // Eksekusi SQL
                                 if($res){ // Jika berhasil
                                 $id_produk=mysql_insert_id($link);

@@ -3,7 +3,7 @@ include("lib_func.php");
 $username=$_POST['username'];
 $userpass=$_POST['userpass'];
 $link=koneksi_db();
-$sql="select * from admin where username='$username' and userpass='$userpass'";
+$sql="select * from admin where username='$username' and userpass=md5('$userpass')";
 $res=mysql_query($sql,$link);
 if(mysql_num_rows($res)==1){ // Jika username dan userpass benar
 $data=mysql_fetch_array($res);
